@@ -1,9 +1,13 @@
 # coding: utf-8
 
-path = "/home/vikhyat/Music/" # ARGV[0]
-files = Dir.new(path).entries - ['.', '..']
 
-files = (Dir.new(path).entries - ['.', '..']).collect { |p| p[0..2] == "YUI" ? p : nil  }.compact
+# TODO: better way of selecting files
+path = ARGV[0]
+files = Dir.new(path).entries - ['.', '..']
+# primitive filtering
+if not ARGV[1].nil?
+  files = files.collect { |p| p[0..(ARGV[1].length-1)] == ARGV[1] ? p : nil  }.compact 
+end
 
 def getch
   begin
