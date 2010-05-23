@@ -17,26 +17,33 @@ end
 
 files = files.sort_by { rand }
 
-ptr = 0
+$ptr = 0
 
 $p = IO.popen("mpg123 -R dummytxt", "w+")
+
+# used to allow changing to the next song
+$break = false
 
 Thread.new do
   loop do
     q = getch
     { 
       'p' => lambda { $p.puts "PAUSE" }, 
-      'q' => lambda { $p.puts "QUIT"; exit }
+      'q' => lambda { $p.puts "QUIT"; exit },
+      'n' => lambda { $break = true }
     }[q].call
   end
 end
 
 loop do
-  t = ptr % files.length
-  puts files[t]
+  t = $ptr % files.length
+  print "#{files[t]}\n\r"
   $p.puts "LOAD #{path}#{files[t]}"
   while (a=$p.gets) != "@P 0\n"
-    # do nothing
+    if $break
+      $break = false
+      break
+    end
   end
-  ptr += 1
+  $ptr += 1
 end
