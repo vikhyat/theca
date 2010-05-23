@@ -38,7 +38,7 @@ end
 
 loop do
   t = $ptr % files.length
-  print "#{files[t].delete('.mp3')}\n\r"
+  print "#{files[t].split('.')[0]}\n\r"
   $p.puts "LOAD #{path}#{files[t]}"
   while (a=$p.gets) != "@P 0\n"
     if $break
