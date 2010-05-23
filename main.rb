@@ -21,11 +21,21 @@ ptr = 0
 
 $p = IO.popen("mpg123 -R dummytxt", "w+")
 
+Thread.new do
+  loop do
+    q = getch
+    { 
+      'p' => lambda { $p.puts "PAUSE" }, 
+      'q' => lambda { $p.puts "QUIT"; exit }
+    }[q].call
+  end
+end
+
 loop do
   t = ptr % files.length
   puts files[t]
   $p.puts "LOAD #{path}#{files[t]}"
-  while (a=$p.gets) != "@P 0"
+  while (a=$p.gets) != "@P 0\n"
     # do nothing
   end
   ptr += 1
