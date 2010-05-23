@@ -1,13 +1,6 @@
 # coding: utf-8
 
-
-# TODO: better way of selecting files
-path = ARGV[0]
-files = Dir.new(path).entries - ['.', '..']
-# primitive filtering
-if not ARGV[1].nil?
-  files = files.collect { |p| p[0..(ARGV[1].length-1)] == ARGV[1] ? p : nil  }.compact 
-end
+files = Dir.glob(ARGV[0])
 
 def getch
   begin
@@ -41,9 +34,9 @@ Thread.new do
 end
 
 loop do
-  t = $ptr % files.length
-  print "#{files[t].split('.')[0]}\n\r"
-  $p.puts "LOAD #{path}#{files[t]}"
+  $ptr = $ptr % files.length
+  print "#{files[$ptr].split('/')[-1].split('.mp3')[0]}\n\r"
+  $p.puts "LOAD #{files[$ptr]}"
   while (a=$p.gets) != "@P 0\n"
     if $break
       $break = false
