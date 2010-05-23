@@ -30,7 +30,8 @@ Thread.new do
     { 
       'p' => lambda { $p.puts "PAUSE" }, 
       'q' => lambda { $p.puts "QUIT"; exit },
-      'n' => lambda { $break = true }
+      '.' => lambda { $break = true },
+      ','  => lambda { $break = true; $ptr -= 2 }
     }[q].call
   end
 end
