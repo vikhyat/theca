@@ -30,13 +30,12 @@ $break = false
 
 Thread.new do
   loop do
-    q = getch
     { 
       'p' => lambda { $p.puts "PAUSE" }, 
       'q' => lambda { $p.puts "QUIT"; exit },
       '.' => lambda { $break = true },
       ','  => lambda { $break = true; $ptr -= 2 }
-    }[q].call
+    }[getch].call
   end
 end
 
