@@ -1,6 +1,13 @@
+#!/usr/bin/env ruby
 # coding: utf-8
 
-files = Dir.glob(ARGV[0])
+begin
+  files = Dir.glob(ARGV[0])
+  raise if files.length == 0
+rescue
+  puts "No files given."
+  exit
+end
 
 def getch
   begin
