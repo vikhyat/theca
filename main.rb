@@ -41,10 +41,11 @@ Thread.new do
 end
 
 loop do
-  $ptr = $ptr % files.length
+  $ptr = $ptr % files.length      # start over if we've finished the last song
   print "#{files[$ptr].split('/')[-1].split('.mp3')[0]}\n\r"
   $p.puts "LOAD #{files[$ptr]}"
   while (a=$p.gets) != "@P 0\n"
+    # check whether the user has skipped this song
     if $break
       $break = false
       break
