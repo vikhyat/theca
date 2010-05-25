@@ -5,7 +5,7 @@ begin
   files = Dir.glob(ARGV[0])
   raise if files.length == 0
 rescue
-  puts "No files given."
+  puts "Failed to load files."
   exit
 end
 
