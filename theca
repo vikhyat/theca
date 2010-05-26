@@ -41,10 +41,7 @@ loop do
   $p.puts "LOAD #{files[$ptr]}"
   while (a=$p.gets) != $stop_signal
     # check whether the user has skipped this song
-    if $break
-      $break = false
-      break
-    end
+    ( $break = false; break ) if $break
   end
   $ptr += 1
 end
