@@ -13,6 +13,27 @@ def getch
   return str
 end
 
+class Playlist
+  def initialize(files)
+    @files = files
+    @ptr   = 0
+  end
+
+  def current
+    return @files[@ptr]
+  end
+
+  def next!(n=1)
+    @ptr = (@ptr + n) % @files.length
+    return self.current
+  end
+
+  def prev!(n=1)
+    @ptr = (@ptr - n) % @files.length
+    return self.current
+  end
+end
+
 begin
   files = Dir.glob(ARGV[0]).sort_by { rand }
   raise if files.length == 0
@@ -22,7 +43,7 @@ rescue
 end
 
 $player       = Player.new
-$ptr          = 0
+$playlist     = Playlist.new(files)
 $break        = false         # used to allow changing to the next song
 $stop_signal  = "@P 0\n"
 
@@ -32,18 +53,16 @@ Thread.new do
       'p' => lambda { $player.pause               }, 
       'q' => lambda { $player.quit; Kernel::exit  },
       '.' => lambda { $break = true               },
-      ',' => lambda { $break = true; $ptr -= 2    }
+      ',' => lambda { $break = true; $p.prev!(2)  }
     }[getch].call
   end
 end
 
 loop do
-  $ptr = $ptr % files.length      # start over if we've finished the last song
-  print "#{File.basename(files[$ptr], ".mp3")}\n\r"
-  $player.load(files[$ptr])
+  print "#{File.basename($playlist.next!, ".mp3")}\n\r"
+  $player.load($playlist.current)
   while $player.gets != $stop_signal
     # check whether the user has skipped this song
     ( $break = false; break ) if $break
   end
-  $ptr += 1
 end
