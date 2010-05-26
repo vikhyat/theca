@@ -63,6 +63,7 @@ loop do
   $player.load($playlist.current)
   while $player.gets != $stop_signal
     # check whether the user has skipped this song
+    # FIXME: this functionality should be implemented by the player class.
     ( $break = false; break ) if $break
   end
 end
