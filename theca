@@ -20,11 +20,9 @@ def getch
 end
 
 $ptr = 0
-
 $p = IO.popen("mpg123 -R dummytxt", "w+")
-
-# used to allow changing to the next song
-$break = false
+$break = false # used to allow changing to the next song
+$stop_signal = "@P 0\n"
 
 Thread.new do
   loop do
@@ -41,7 +39,7 @@ loop do
   $ptr = $ptr % files.length      # start over if we've finished the last song
   print "#{File.basename(files[$ptr], ".mp3")}\n\r"
   $p.puts "LOAD #{files[$ptr]}"
-  while (a=$p.gets) != "@P 0\n"
+  while (a=$p.gets) != $stop_signal
     # check whether the user has skipped this song
     if $break
       $break = false
