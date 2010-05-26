@@ -2,7 +2,7 @@
 # coding: utf-8
 
 begin
-  files = Dir.glob(ARGV[0])
+  files = Dir.glob(ARGV[0]).sort_by { rand }
   raise if files.length == 0
 rescue
   puts "Failed to load files."
@@ -18,8 +18,6 @@ def getch
   end
   return str
 end
-
-files = files.sort_by { rand }
 
 $ptr = 0
 
