@@ -10,6 +10,14 @@ class Player
     @p.puts "LOAD #{file}"
   end
 
+  def pause
+    @p.puts "PAUSE"
+  end
+
+  def quit
+    @p.puts "QUIT"
+  end
+
   def gets
     @p.gets
   end
@@ -41,10 +49,10 @@ $stop_signal  = "@P 0\n"
 Thread.new do
   loop do
     { 
-      'p' => lambda { $p.puts "PAUSE"          }, 
-      'q' => lambda { $p.puts "QUIT"; exit     },
-      '.' => lambda { $break = true            },
-      ',' => lambda { $break = true; $ptr -= 2 }
+      'p' => lambda { $player.pause               }, 
+      'q' => lambda { $player.quit; Kernel::exit  },
+      '.' => lambda { $break = true               },
+      ',' => lambda { $break = true; $ptr -= 2    }
     }[getch].call
   end
 end
