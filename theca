@@ -1,12 +1,18 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-begin
-  files = Dir.glob(ARGV[0]).sort_by { rand }
-  raise if files.length == 0
-rescue
-  puts "Failed to load files."
-  exit
+class Player
+  def initialize
+    @p = IO.popen("mpg123 -R dummytxt", "w+")
+  end
+
+  def load(file)
+    @p.puts "LOAD #{file}"
+  end
+
+  def gets
+    @p.gets
+  end
 end
 
 def getch
@@ -19,10 +25,18 @@ def getch
   return str
 end
 
-$ptr = 0
-$p = IO.popen("mpg123 -R dummytxt", "w+")
-$break = false # used to allow changing to the next song
-$stop_signal = "@P 0\n"
+begin
+  files = Dir.glob(ARGV[0]).sort_by { rand }
+  raise if files.length == 0
+rescue
+  puts "Failed to load files."
+  exit
+end
+
+$player       = Player.new
+$ptr          = 0
+$break        = false         # used to allow changing to the next song
+$stop_signal  = "@P 0\n"
 
 Thread.new do
   loop do
@@ -38,8 +52,8 @@ end
 loop do
   $ptr = $ptr % files.length      # start over if we've finished the last song
   print "#{File.basename(files[$ptr], ".mp3")}\n\r"
-  $p.puts "LOAD #{files[$ptr]}"
-  while (a=$p.gets) != $stop_signal
+  $player.load(files[$ptr])
+  while $player.gets != $stop_signal
     # check whether the user has skipped this song
     ( $break = false; break ) if $break
   end
