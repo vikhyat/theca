@@ -24,8 +24,7 @@ end
 
 $player       = Player.new
 $playlist     = Playlist.new(files)
-$break        = false         # used to allow changing to the next song
-$stop_signal  = "@P 0\n"
+$break        = false         # FIXME: implement breaking as a part of the Player class.
 
 Thread.new do
   loop do
@@ -40,10 +39,5 @@ end
 
 loop do
   print "#{File.basename($playlist.next!, ".mp3")}\n\r"
-  $player.load($playlist.current)
-  while $player.gets != $stop_signal
-    # check whether the user has skipped this song
-    # FIXME: this functionality should be implemented by the player class.
-    ( $break = false; break ) if $break
-  end
+  $player.play($playlist.current)
 end
