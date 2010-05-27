@@ -35,9 +35,9 @@ Thread.new do
         $player.quit
         Kernel::exit
       when '.'
-        $break = true
+        $player.break
       when ','
-        $break = true
+        $player.break
         $p.prev!(2)
       else
         # probably accidental input; ignore
@@ -47,5 +47,6 @@ end
 
 loop do
   print "#{File.basename($playlist.next!, ".mp3")}\n\r"
+  sleep 0.2       # small break at the end of each song
   $player.play($playlist.current)
 end
