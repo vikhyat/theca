@@ -28,12 +28,20 @@ $break        = false         # FIXME: implement breaking as a part of the Playe
 
 Thread.new do
   loop do
-    { 
-      'p' => lambda { $player.pause               }, 
-      'q' => lambda { $player.quit; Kernel::exit  },
-      '.' => lambda { $break = true               },
-      ',' => lambda { $break = true; $p.prev!(2)  }
-    }[getch].call
+    case getch
+      when 'p'
+        $player.pause
+      when 'q'
+        $player.quit
+        Kernel::exit
+      when '.'
+        $break = true
+      when ','
+        $break = true
+        $p.prev!(2)
+      else
+        # probably accidental input; ignore
+    end
   end
 end
 
