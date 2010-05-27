@@ -24,8 +24,8 @@ end
 
 $player       = Player.new
 $playlist     = Playlist.new(files)
-$break        = false         # FIXME: implement breaking as a part of the Player class.
 
+# FIXME: replace the interface with something better
 Thread.new do
   loop do
     case getch
