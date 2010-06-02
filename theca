@@ -38,7 +38,7 @@ Thread.new do
         $player.break
       when ','
         $player.break
-        $p.prev!(2)
+        $playlist.prev!(2)
       else
         # probably accidental input; ignore
     end
