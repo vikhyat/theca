@@ -1,2 +1,3 @@
-TODO:
-  - Last.fm scrobbling support.
+Theca is a tiny command-line frontend to MPG123. I wrote it because I wanted an extremely simple, lightweight mp3 player and didn't find anything that fit what I had in mind.
+
+All of the code is released under the MIT License. See the LICENSE file for details.
