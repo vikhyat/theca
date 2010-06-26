@@ -31,7 +31,6 @@ end
 $player       = Player.new
 $playlist     = Playlist.new(files)
 
-# FIXME: replace the interface with something better
 Thread.new do
   loop do
     case getch
