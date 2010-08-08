@@ -51,6 +51,7 @@ Thread.new do
 end
 
 loop do
-  print "#{File.basename($playlist.next!, ".mp3")}\n\r"
-  $player.play($playlist.current)
+  $playlist.next!
+  print "#{$playlist.current_song}\n\r"
+  $player.play($playlist.current_file)
 end
