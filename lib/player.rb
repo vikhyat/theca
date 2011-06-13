@@ -6,25 +6,11 @@ class Player
     @break = false
   end
 
-  def load(file)
-    @p.puts "LOAD #{file}"
-  end
-
-  def pause
-    @p.puts "PAUSE"
-  end
-
-  def quit
-    @p.puts "QUIT"
-  end
-
-  def gets
-    @p.gets
-  end
-
-  def break
-    @break = true
-  end
+  def load(file); @p.puts "LOAD #{file}"; end
+  def pause;      @p.puts "PAUSE";        end
+  def quit;       @p.puts "QUIT";         end
+  def gets;       @p.gets;                end
+  def break;      @break = true;          end
 
   # start playing and return after we're done.
   def play(file)
@@ -34,4 +20,3 @@ class Player
     end
   end
 end
-
