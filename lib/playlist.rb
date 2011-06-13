@@ -4,22 +4,19 @@ class Playlist
     @ptr   = 0
   end
 
-  def current_song
-    File.basename(self.current_file, ".mp3")
-  end
+  def current_song; File.basename(self.current_file, ".mp3"); end
+  def current_file; @files[@ptr];                             end
 
-  def current_file
-    return @files[@ptr]
-  end
-
+  # Go ahead n songs
   def next!(n=1)
     @ptr = (@ptr + n) % @files.length
-    return self.current_file
+    self.current_file
   end
 
+  # Go back n songs
   def prev!(n=1)
     @ptr = (@ptr - n) % @files.length
-    return self.current_file
+    self.current_file
   end
 end
 
