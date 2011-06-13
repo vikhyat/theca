@@ -34,21 +34,11 @@ $playlist     = Playlist.new(files)
 Thread.new do
   loop do
     case getch
-      when 'p'
-        $player.pause
-      when 'q'
-        $player.quit
-        Kernel::exit
-      when '.'
-        $player.break
-      when ','
-        $player.break
-        $playlist.prev!(2)
-      when 'l'
-        print `clear`
-        print "#{$playlist.current_song}\n\r"
-      else
-        # probably accidental input; ignore
+      when 'p'; $player.pause
+      when 'q'; $player.quit; Kernel::exit
+      when '.'; $player.break
+      when ','; $player.break; $playlist.prev!(2)
+      when 'l'; print `clear`; print "#{$playlist.current_song}\n\r"
     end
   end
 end
